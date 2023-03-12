@@ -1,24 +1,21 @@
 package Lab2.App2;
 
-import java.util.ArrayList;
-
 public class Main {
 
-    private static final int noOfThreads=6;
+    private static final int noOfThreads = 6;
 
-    private static final int processorLoad=1000000;
+    private static final int processorLoad = 1000000;
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
 
-        Model model = new Model(noOfThreads);
+        Window win = new Window(noOfThreads);
+        Fir f;
 
-        View view = new View(model);
+        for (int i = 0; i < noOfThreads; i++) {
 
-        Controller controller = new Controller(model, processorLoad);
-
-        for(int i =0; i<noOfThreads; i++){
-
-            controller.startFirThread(i,i+2);
+            f = new Fir(i, win, processorLoad, i + 2);
+            f.addObserver(win);
+            f.t.start();
 
         }
 
