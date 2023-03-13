@@ -14,8 +14,6 @@ public class MovingSquares extends JFrame implements Runnable {
         super("Moving Squares");
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setResizable(false);
         setVisible(true);
 
         square1 = new Square(50, 50, 50, Color.RED);

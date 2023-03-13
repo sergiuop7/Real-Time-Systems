@@ -28,6 +28,7 @@ public class Window extends JFrame implements Observer {
         }
     }
 
+    @Override
     public void update(Observable o, Object obj) {
         if(o!=null)
         {
@@ -37,6 +38,5 @@ public class Window extends JFrame implements Observer {
             bars.get(id).setValue(cc);
         }
     }
-
 
 }
