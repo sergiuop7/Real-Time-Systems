@@ -1,25 +1,41 @@
 package Lab3.App1;
 
-public class RThread extends Thread {
-    FileService service;
-    Object readLock;
+public class RThread extends Thread{
 
-    public RThread(FileService service) {
+    private FileService service;
+
+    private Object lock;
+
+    public RThread(FileService service, Object lock) {
+
         this.service = service;
-        this.readLock = service.readLock;
+
+        this.lock = lock;
+
     }
 
-    public void run() {
-        while (!Main.isStopThreads()) {
+    public void run(){
+
+        while (!Main.isStopThreads()){
+
             try {
-                synchronized (readLock) {
-                    String readMsg = service.read();
-                    System.out.println(readMsg);
+
+                String readMsg;
+                synchronized(lock) {
+                    readMsg = service.read();
                 }
+                System.out.println(readMsg);
+
                 Thread.sleep(3000);
+
             } catch (Exception e) {
+
                 e.printStackTrace();
+
             }
+
         }
+
     }
+
 }

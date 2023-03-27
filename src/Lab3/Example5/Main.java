@@ -1,29 +1,88 @@
 package Lab3.Example5;
 
-public class Main {
+import java.io.PipedOutputStream;
 
-    private static boolean stopThreads = false;
+import java.io.*;
 
-    private static Object lock = new Object();
+public class Main{
 
-    public static void main(String[] args){
+    public static void main(String args[]) {
 
-        FileService service = new FileService("messages.txt");
+        ReadThread rt = new ReadThread();
 
-        RThread reader = new RThread(service, lock);
+        WriteThread wt = new WriteThread();
 
-        WThread writer = new WThread(service, lock);
+        try{
 
-        reader.start();
+            rt.conect(wt.getPipe());
 
-        writer.start();
+            rt.start();wt.start();
 
-    }
-
-    public static boolean isStopThreads(){
-
-        return stopThreads;
+        }catch(Exception e){e.printStackTrace();}
 
     }
 
 }
+
+class WriteThread extends Thread{
+
+    private PipedOutputStream po;
+
+    WriteThread(){
+
+        po = new PipedOutputStream();
+
+    }
+
+    public void run(){
+
+        try{
+
+            while (true){
+
+                int d = (int)(10*Math.random());
+
+                System.out.println("Writing Thread is sent : "+d);
+
+                po.write(d);
+
+                sleep(400);
+
+            }
+
+        }
+
+        catch(Exception e){
+
+            e.printStackTrace();
+
+        }
+
+    }
+
+    PipedOutputStream getPipe(){return po;}
+
+}
+
+class ReadThread extends Thread{
+
+    private PipedInputStream pi;
+
+    ReadThread(){
+
+        pi = new PipedInputStream();
+
+    }
+
+    public void run(){
+
+        try{
+
+            while (true)
+            {
+                if (pi.available()>0) {System.out.println("Read Thread is received : "+pi.read());
+                }
+            }
+        } catch(Exception e){}
+    } void conect(PipedOutputStream os)throws Exception{ pi.connect(os);
+    } }
