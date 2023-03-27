@@ -1,35 +1,42 @@
 package Lab3.Example3;
 
-class DividerThread extends Thread {
-    private int start;
-    private int end;
-    private static int sum = 0;
+import java.util.Objects;
 
-    public DividerThread(String name, int start, int end) {
-        super(name);
-        this.start = start;
-        this.end = end;
+class JoinTestThread extends Thread{
+    Thread t;
+    String name;
+
+    JoinTestThread(String n, Thread t){
+        this.setName(n);
+        this.t=t;
+        this.name = n;
     }
-
     public void run() {
-        System.out.println(getName() + " has entered the run() method.");
-        int localSum = 0;
-        for (int i = start; i <= end; i++) {
-            if (i == 0) continue;
-            if (end % i == 0) localSum += i;
+        System.out.println("Thread "+name+" has entered the run() method");
+        try {
+            if (t != null) t.join();
+            System.out.println("Thread "+name+" executing operation.");
+            Thread.sleep(3000);
+            if (Objects.equals(name, "Thread 1")) {
+                int s = 0;
+                int random = (int)Math.floor(Math.random() * (60000 - 50000 + 1) + 50000);
+                for (int i=1;i<=random;i++)
+                    if (random%i==0)
+                        s = s+i;
+                System.out.println("Thread 1 sum: "+s);
+                Main.sumOfDivisors = s;
+            }else if(Objects.equals(name,"Thread 2")){
+                int s = 0;
+                int random = (int)Math.floor(Math.random() * (30000 - 20000 + 1) + 20000);
+                for (int i=1;i<=random;i++)
+                    if (random%i==0)
+                        s = s+i;
+                System.out.println("Thread 2 sum: "+s);
+                Main.sumOfDivisors += s;
+            }
+            System.out.println("Thread "+name+" has terminated operation.");
         }
-        System.out.println(getName() + " has determined the dividers. Local sum: " + localSum);
-
-        synchronized (DividerThread.class) {
-            sum += localSum;
-            System.out.println(getName() + " has updated the sum to: " + sum);
-        }
-
-        System.out.println(getName() + " has terminated.");
-    }
-
-    public static int getSum() {
-        return sum;
+        catch(Exception e){e.printStackTrace();}
     }
 }
 

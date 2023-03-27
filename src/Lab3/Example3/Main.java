@@ -1,24 +1,12 @@
 package Lab3.Example3;
 
 public class Main {
-    public static void main(String[] args) {
-        DividerThread t1 = new DividerThread("Thread 1", 1, 50000);
-        DividerThread t2 = new DividerThread("Thread 2", 1, 20000);
+    public static int sumOfDivisors;
 
-        t1.start();
-        try {
-            t1.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        t2.start();
-
-        try {
-            t2.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("Final sum: " + DividerThread.getSum());
+    public static void main(String[] args){
+        JoinTestThread w1 = new JoinTestThread("Thread 1",null);
+        JoinTestThread w2 = new JoinTestThread("Thread 2",w1);
+        w1.start();
+        w2.start();
     }
 }
