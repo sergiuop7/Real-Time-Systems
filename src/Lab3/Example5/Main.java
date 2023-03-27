@@ -1,24 +1,28 @@
 package Lab3.Example5;
 
-import java.io.PipedOutputStream;
+public class Main {
 
-import java.io.*;
+    private static boolean stopThreads = false;
 
-public class Main{
+    private static Object lock = new Object();
 
-    public static void main(String args[]) {
+    public static void main(String[] args){
 
-        ReadThread rt = new ReadThread();
+        FileService service = new FileService("messages.txt");
 
-        WriteThread wt = new WriteThread();
+        RThread reader = new RThread(service, lock);
 
-        try{
+        WThread writer = new WThread(service, lock);
 
-            rt.connect(wt.getPipe());
+        reader.start();
 
-            rt.start();wt.start();
+        writer.start();
 
-        }catch(Exception e){e.printStackTrace();}
+    }
+
+    public static boolean isStopThreads(){
+
+        return stopThreads;
 
     }
 
