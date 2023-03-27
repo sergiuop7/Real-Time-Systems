@@ -16,8 +16,7 @@ class DividerThread extends Thread {
         int localSum = 0;
         for (int i = start; i <= end; i++) {
             if (i == 0) continue;
-            if (50000 <= end && i % 2 != 0) continue;
-            if (i % 2 == 0) localSum += i;
+            if (end % i == 0) localSum += i;
         }
         System.out.println(getName() + " has determined the dividers. Local sum: " + localSum);
 
