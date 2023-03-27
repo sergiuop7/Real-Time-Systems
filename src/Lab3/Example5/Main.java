@@ -14,7 +14,7 @@ public class Main{
 
         try{
 
-            rt.conect(wt.getPipe());
+            rt.connect(wt.getPipe());
 
             rt.start();wt.start();
 

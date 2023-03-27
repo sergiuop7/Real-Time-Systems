@@ -1,53 +1,39 @@
 package Lab3.Example3;
 
-class JoinTestThread extends Thread{
+class DividerThread extends Thread {
+    private int start;
+    private int end;
+    private static int sum = 0;
 
-    String n;
-    Thread t;
-
-    JoinTestThread(String n, Thread t){
-
-        this.setName(n);
-
-        this.t=t;
-
+    public DividerThread(String name, int start, int end) {
+        super(name);
+        this.start = start;
+        this.end = end;
     }
 
     public void run() {
+        System.out.println(getName() + " has entered the run() method.");
+        int localSum = 0;
+        for (int i = start; i <= end; i++) {
+            if (i == 0) continue;
+            if (50000 <= end && i % 2 != 0) continue;
+            if (i % 2 == 0) localSum += i;
+        }
+        System.out.println(getName() + " has determined the dividers. Local sum: " + localSum);
 
-        System.out.println("Thread "+n+" has entered the run() method");
-
-        try {
-
-            if (t != null) t.join();
-
-            System.out.println("Thread "+n+" executing operation.");
-
-            Thread.sleep(3000);
-
-            System.out.println("Thread "+n+" has terminated operation.");
-
+        synchronized (DividerThread.class) {
+            sum += localSum;
+            System.out.println(getName() + " has updated the sum to: " + sum);
         }
 
-        catch(Exception e){e.printStackTrace();}
-
+        System.out.println(getName() + " has terminated.");
     }
 
-}
-
-class Main {
-
-    public static void main(String[] args){
-
-        JoinTestThread w1 = new JoinTestThread("Thread 1",null);
-
-        JoinTestThread w2 = new JoinTestThread("Thread 2",w1);
-
-        w1.start();
-
-        w2.start();
-
+    public static int getSum() {
+        return sum;
     }
-
 }
+
+
+
 

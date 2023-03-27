@@ -25,7 +25,7 @@ class ReadThread extends Thread{
         }
         catch(Exception e){}
     }
-    void conect(PipedOutputStream os)throws Exception{
+    void connect(PipedOutputStream os)throws Exception{
         pi.connect(os);
     }
 }
