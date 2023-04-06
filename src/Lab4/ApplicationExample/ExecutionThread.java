@@ -20,6 +20,7 @@ public class ExecutionThread extends Thread {
 
         this.activity_max = activity_max;
     }
+
     public void run()
     {
         System.out.println(this.getName() + " - STATE 1");
@@ -37,5 +38,6 @@ public class ExecutionThread extends Thread {
         }
         System.out.println(this.getName() + " - STATE 4");
     }
+
 }
 

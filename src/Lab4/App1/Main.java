@@ -10,4 +10,5 @@ public class Main {
         new ExecutionThreadEx1(monitor1, monitor2,2, 5, 5).start();
 
     }
+
 }

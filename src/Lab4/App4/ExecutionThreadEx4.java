@@ -84,7 +84,6 @@ public class ExecutionThreadEx4 extends Thread {
                 break;
         }
 
-
     }
 
 }

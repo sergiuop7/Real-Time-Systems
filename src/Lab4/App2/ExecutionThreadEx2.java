@@ -56,7 +56,6 @@ public class ExecutionThreadEx2 extends Thread {
         }
 
         System.out.println(this.getName() + " - STATE 4");
-
     }
 
 }

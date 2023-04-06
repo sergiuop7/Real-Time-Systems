@@ -1,7 +1,9 @@
 package Lab4.App1;
 
 public class ExecutionThreadEx1 extends Thread {
+
     Integer monitor1, monitor2;
+
     int sleep_min, sleep_max, sleep_s;
 
     public ExecutionThreadEx1(Integer monitor1, Integer monitor2, int sleep_min, int sleep_max, int sleep_s) {
@@ -57,4 +59,5 @@ public class ExecutionThreadEx1 extends Thread {
             e.printStackTrace();
         }
     }
+
 }
