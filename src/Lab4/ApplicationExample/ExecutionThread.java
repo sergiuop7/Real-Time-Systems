@@ -6,9 +6,7 @@ public class ExecutionThread extends Thread {
 
     int sleep_min, sleep_max, activity_min, activity_max;
 
-    public ExecutionThread(Integer monitor, int sleep_min, int
-
-            sleep_max, int activity_min, int activity_max) {
+    public ExecutionThread(Integer monitor, int sleep_min, int sleep_max, int activity_min, int activity_max) {
 
         this.monitor = monitor;
 

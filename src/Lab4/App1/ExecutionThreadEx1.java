@@ -40,7 +40,7 @@ public class ExecutionThreadEx1 extends Thread {
                     synchronized (monitor1)
                     {
                         System.out.println(this.getName()+" - STATE 2");
-                        int k1 = (int) Math.round(Math.random() * ((sleep_min- sleep_max)+sleep_min));
+                        int k1 = (int) Math.round(Math.random() * ((sleep_min - sleep_max)+sleep_min));
                         for (int i = 0; i < k1 * 100000; i++) {
                             i++;
                             i--;
