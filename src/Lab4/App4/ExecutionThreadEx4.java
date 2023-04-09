@@ -21,7 +21,7 @@ public class ExecutionThreadEx4 extends Thread {
             case "Thread-0":
 
                 try {
-                    Thread.sleep(sleep);
+                    Thread.sleep(sleep * 500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
