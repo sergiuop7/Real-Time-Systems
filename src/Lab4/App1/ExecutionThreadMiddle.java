@@ -23,7 +23,7 @@ public class ExecutionThreadMiddle extends Thread {
                     i--;
                 }
                 try {
-                    Thread.sleep(sleep);
+                    Thread.sleep(sleep * 500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
