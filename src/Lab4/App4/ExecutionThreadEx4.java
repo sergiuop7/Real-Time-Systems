@@ -5,13 +5,15 @@ public class ExecutionThreadEx4 extends Thread {
     Integer monitor1, monitor2;
 
     int sleep, activity_min,activity_max;
+    Thread t;
 
-    public ExecutionThreadEx4(Integer monitor1,Integer monitor2, int sleep, int activity_min, int activity_max) {
+    public ExecutionThreadEx4(Integer monitor1,Integer monitor2, int sleep, int activity_min, int activity_max, Thread t) {
         this.monitor1 = monitor1;
         this.monitor2=monitor2;
         this.sleep = sleep;
         this.activity_min = activity_min;
         this.activity_max = activity_max;
+        this.t = t;
     }
 
     public void run() {
@@ -36,6 +38,7 @@ public class ExecutionThreadEx4 extends Thread {
                     synchronized (monitor2) {
                         monitor1.notify();
                         monitor2.notify();
+                        System.out.println("The monitors are notified");
                     }
                 }
 
@@ -45,7 +48,7 @@ public class ExecutionThreadEx4 extends Thread {
             case "Thread-1":
                 synchronized (monitor1) {
                     try {
-                        monitor1.wait(2000);
+                        monitor1.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -58,13 +61,20 @@ public class ExecutionThreadEx4 extends Thread {
                     }
 
                     System.out.println(this.getName() + " - STATE 3");
+                    if(t != null) {
+                        try {
+                            t.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
                 break;
 
             case "Thread-2":
                 synchronized (monitor2){
                     try {
-                        monitor2.wait(2000);
+                        monitor2.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -77,6 +87,13 @@ public class ExecutionThreadEx4 extends Thread {
                     }
 
                     System.out.println(this.getName() + " - STATE 3");
+                    if(t != null) {
+                        try {
+                            t.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
                 break;
 
