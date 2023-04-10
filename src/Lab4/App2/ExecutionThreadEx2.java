@@ -29,7 +29,6 @@ public class ExecutionThreadEx2 extends Thread {
         }
 
         synchronized (monitor1) {
-            synchronized (monitor2) {
 
                 System.out.println(this.getName() + " - STATE 2");
                 int k1 = (int) Math.round(Math.random() * (activity_max2 - activity_min2) + activity_min2);
@@ -40,6 +39,7 @@ public class ExecutionThreadEx2 extends Thread {
                     i--;
 
                 }
+            synchronized (monitor2) {
                 System.out.println(this.getName() + " - STATE 3");
 
                 try {
