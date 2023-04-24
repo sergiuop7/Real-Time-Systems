@@ -39,7 +39,6 @@ public class ExecutionThread extends Thread {
                 lock1.unlock();
             }
         }
-
         System.out.println(this.getName() + " - STATE 4");
     }
 }

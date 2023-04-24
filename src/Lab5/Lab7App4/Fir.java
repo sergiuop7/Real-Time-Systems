@@ -35,6 +35,7 @@ public class Fir extends Thread {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            System.out.println(this.getName() + " - STATE 4");
         }
     }
 }
