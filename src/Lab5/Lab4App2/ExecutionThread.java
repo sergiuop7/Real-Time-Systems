@@ -1,6 +1,5 @@
 package Lab5.Lab4App2;
 
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ExecutionThread extends Thread {
