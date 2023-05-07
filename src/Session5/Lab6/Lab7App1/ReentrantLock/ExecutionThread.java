@@ -30,17 +30,16 @@ public class ExecutionThread extends Thread {
         while (true) {
             System.out.println(this.getName() + " - STATE 1");
 
-            try {
-                Thread.sleep(Math.round(Math.random() * (sleep_max - sleep_min) + sleep_min) * 500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            int k1 = (int) Math.round(Math.random() * (sleep_max - sleep_min) + sleep_min);
+            for(int i = 0; i <= k1 * 100000; i++) {
+                i++; i--;
             }
 
-            lock1.lock();
+            if(lock1.tryLock()) {
             try {
                 System.out.println(this.getName() + " - STATE 2");
-                int k = (int) Math.round(Math.random() * (activity_max - activity_min) + activity_min);
-                for (int i = 0; i < k * 100000; i++) {
+                int k2 = (int) Math.round(Math.random() * (activity_max - activity_min) + activity_min);
+                for (int i = 0; i < k2 * 100000; i++) {
                     i++;
                     i--;
                 }
@@ -51,19 +50,21 @@ public class ExecutionThread extends Thread {
                     e.printStackTrace();
                 }
 
-                lock2.lock();
-                try {
-                    System.out.println(this.getName() + " - STATE 3");
+                if (lock2.tryLock()) {
                     try {
-                        Thread.sleep(Math.round(sleep) * 500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        System.out.println(this.getName() + " - STATE 3");
+                        try {
+                            Thread.sleep(Math.round(sleep) * 500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } finally {
+                        lock2.unlock();
                     }
-                } finally {
-                    lock2.unlock();
                 }
-            } finally {
-                lock1.unlock();
+            } finally{
+                    lock1.unlock();
+                }
             }
 
             System.out.println(this.getName() + " - STATE 4");

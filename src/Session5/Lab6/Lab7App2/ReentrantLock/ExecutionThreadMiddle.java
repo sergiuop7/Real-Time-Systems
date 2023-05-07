@@ -4,16 +4,18 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ExecutionThread extends Thread {
-    private final ReentrantLock lock;
+public class ExecutionThreadMiddle extends Thread {
+    private final ReentrantLock lock1;
+    private final ReentrantLock lock2;
     private final int sleep;
     private final int activity_min;
     private final int activity_max;
     private final CyclicBarrier cyclicBarrier;
 
-    public ExecutionThread(ReentrantLock lock, int sleep, int activity_min, int activity_max,
+    public ExecutionThreadMiddle(ReentrantLock lock1, ReentrantLock lock2, int sleep, int activity_min, int activity_max,
                            CyclicBarrier cyclicBarrier) {
-        this.lock = lock;
+        this.lock1 = lock1;
+        this.lock2 = lock2;
         this.sleep = sleep;
         this.activity_min = activity_min;
         this.activity_max = activity_max;
@@ -23,23 +25,24 @@ public class ExecutionThread extends Thread {
     public void run() {
         System.out.println(this.getName() + " - STATE 1");
 
-        if(lock.tryLock()) {
-        try {
-            System.out.println(this.getName() + " - STATE 2");
-            int k = (int) Math.round(Math.random() * (activity_max - activity_min) + activity_min);
-            for (int i = 0; i < k * 100000; i++) {
-                i++;
-                i--;
-            }
-
+        if(lock1.tryLock() && lock2.tryLock()) {
             try {
-                Thread.sleep(Math.round(sleep) * 500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println(this.getName() + " - STATE 2");
+                int k = (int) Math.round(Math.random() * (activity_max - activity_min) + activity_min);
+                for (int i = 0; i < k * 100000; i++) {
+                    i++;
+                    i--;
+                }
+
+                try {
+                    Thread.sleep(Math.round(sleep) * 500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } finally {
+                lock2.unlock();
+                lock1.unlock();
             }
-        } finally {
-            lock.unlock();
-        }
         }
 
         System.out.println(this.getName() + " - STATE 3");

@@ -30,17 +30,16 @@ public class ExecutionThread extends Thread {
         while (true) {
             System.out.println(this.getName() + " - STATE 1");
 
-            try {
-                Thread.sleep(Math.round(Math.random() * (sleep_max - sleep_min) + sleep_min) * 500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            int k1 = (int) Math.round(Math.random() * (sleep_max - sleep_min) + sleep_min);
+            for(int i = 0; i <= k1 * 100000; i++) {
+                i++; i--;
             }
 
-            semaphore1.acquireUninterruptibly();
             try {
+                semaphore1.acquire(1);
                 System.out.println(this.getName() + " - STATE 2");
-                int k = (int) Math.round(Math.random() * (activity_max - activity_min) + activity_min);
-                for (int i = 0; i < k * 100000; i++) {
+                int k2 = (int) Math.round(Math.random() * (activity_max - activity_min) + activity_min);
+                for (int i = 0; i < k2 * 100000; i++) {
                     i++;
                     i--;
                 }
@@ -51,7 +50,7 @@ public class ExecutionThread extends Thread {
                     e.printStackTrace();
                 }
 
-                semaphore2.acquireUninterruptibly();
+                semaphore2.acquire(1);
                 try {
                     System.out.println(this.getName() + " - STATE 3");
                     try {
@@ -62,6 +61,8 @@ public class ExecutionThread extends Thread {
                 } finally {
                     semaphore2.release();
                 }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             } finally {
                 semaphore1.release();
             }

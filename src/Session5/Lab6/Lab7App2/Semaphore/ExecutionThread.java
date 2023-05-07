@@ -24,10 +24,7 @@ public class ExecutionThread extends Thread {
         System.out.println(this.getName() + " - STATE 1");
 
         try {
-            semaphore.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            semaphore.acquire(1);
 
         System.out.println(this.getName() + " - STATE 2");
         int k = (int) Math.round(Math.random() * (activity_max - activity_min) + activity_min);
@@ -41,8 +38,11 @@ public class ExecutionThread extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        semaphore.release();
+        semaphore.release(1);
 
         System.out.println(this.getName() + " - STATE 3");
 
