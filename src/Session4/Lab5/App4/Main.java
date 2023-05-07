@@ -12,7 +12,7 @@ public class Main {
         JFrame frame = new JFrame("Intersection");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 800);
-        IntersectionPanel panel = new IntersectionPanel();
+        IntersectionPannel panel = new IntersectionPannel();
         frame.add(panel);
         frame.setVisible(true);
 

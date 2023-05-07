@@ -48,7 +48,7 @@ class FirSem extends Thread {
 
                 }
 
-                this.s.release(); // end of critical region
+                this.s.release(this.permit); // end of critical region
 
                 System.out.println("Fir " + name + " released a token from the semaphore");
 
@@ -76,7 +76,7 @@ public class MutExSemaphores {
 
         f1 = new FirSem(1, s, 2, (int) Math.round(Math.random() * 3 + 2), 2);
 
-        f2 = new FirSem(2, s, 4, (int) Math.round(Math.random() * 3 + 3), 1);
+        f2 = new FirSem(2, s, 4, (int) Math.round(Math.random() * 3 + 3), 2);
 
         f1.start();
 

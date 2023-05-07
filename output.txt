@@ -1,0 +1,10 @@
+Iteration: 1, Thread 3 Result: 4
+Iteration: 1, Thread 1 Result: -6
+Iteration: 1, Thread 2 Result: 7
+Iteration: 1
+Iteration: 2, Thread 1 Result: 8
+Iteration: 2, Thread 2 Result: -9
+Iteration: 2, Thread 3 Result: -2
+Iteration: 3, Thread 3 Result: -3
+Iteration: 3, Thread 2 Result: -10
+Iteration: 3, Thread 1 Result: 3

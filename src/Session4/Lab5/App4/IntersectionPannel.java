@@ -3,9 +3,9 @@ package Session4.Lab5.App4;
 import javax.swing.*;
 import java.awt.*;
 
-public class IntersectionPanel extends JPanel {
+public class IntersectionPannel extends JPanel {
 
-    public IntersectionPanel() {
+    public IntersectionPannel() {
 
     }
 
