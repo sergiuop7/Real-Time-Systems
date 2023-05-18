@@ -57,6 +57,8 @@ public class MathProblemSimulation {
 
                     barrier.await(); // Wait for other threads to finish this iteration
                 }
+
+                barrier.reset();
             } catch (InterruptedException | BrokenBarrierException | IOException e) {
                 e.printStackTrace();
             }

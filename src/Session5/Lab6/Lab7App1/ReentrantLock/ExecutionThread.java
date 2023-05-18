@@ -27,27 +27,21 @@ public class ExecutionThread extends Thread {
     }
 
     public void run() {
-        while (true) {
-            System.out.println(this.getName() + " - STATE 1");
+        System.out.println(this.getName() + " - STATE 1");
 
-            int k1 = (int) Math.round(Math.random() * (sleep_max - sleep_min) + sleep_min);
-            for(int i = 0; i <= k1 * 100000; i++) {
-                i++; i--;
-            }
+        int k = (int) Math.round(Math.random() * (sleep_max - sleep_min) + sleep_min);
+        for (int i = 0; i < k * 100000; i++) {
+            i++;
+            i--;
+        }
 
-            if(lock1.tryLock()) {
+        if (lock1.tryLock()) {
             try {
                 System.out.println(this.getName() + " - STATE 2");
-                int k2 = (int) Math.round(Math.random() * (activity_max - activity_min) + activity_min);
-                for (int i = 0; i < k2 * 100000; i++) {
+                k = (int) Math.round(Math.random() * (activity_max - activity_min) + activity_min);
+                for (int i = 0; i < k * 100000; i++) {
                     i++;
                     i--;
-                }
-
-                try {
-                    cyclicBarrier.await(); // Wait for other threads to reach the barrier
-                } catch (InterruptedException | BrokenBarrierException e) {
-                    e.printStackTrace();
                 }
 
                 if (lock2.tryLock()) {
@@ -62,18 +56,17 @@ public class ExecutionThread extends Thread {
                         lock2.unlock();
                     }
                 }
-            } finally{
-                    lock1.unlock();
-                }
+            } finally {
+                lock1.unlock();
             }
+        }
 
-            System.out.println(this.getName() + " - STATE 4");
+        System.out.println(this.getName() + " - STATE 4");
 
-            try {
-                cyclicBarrier.await(); // Wait for other threads to reach the barrier
-            } catch (InterruptedException | BrokenBarrierException e) {
-                e.printStackTrace();
-            }
+        try {
+            cyclicBarrier.await();
+        } catch (InterruptedException | BrokenBarrierException e) {
+            e.printStackTrace();
         }
     }
 }

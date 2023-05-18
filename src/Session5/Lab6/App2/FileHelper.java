@@ -1,8 +1,8 @@
 package Session5.Lab6.App2;
 
 import java.io.IOException;
-        import java.nio.file.Files;
-        import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class FileHelper {
     public static String[] readLines(String filePath, int numLines) throws IOException {

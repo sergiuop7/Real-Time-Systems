@@ -73,7 +73,7 @@ public class Fir {
                 return;
             }
 
-            if (iterationCount == 1) {
+            if (iterationCount >= 1) {
                 // Write iteration header to file
                 try {
                     fileWriter.write("Iteration: " + iterationCount + "\n");
@@ -89,11 +89,14 @@ public class Fir {
                 try {
                     String[] lines = FileHelper.readLines("output.txt", THREADS_COUNT);
 
-                    for (int i = 1; i <= THREADS_COUNT; i++) {
-                        String line = lines[iterationCount - i];
+                    for (int i = 0; i < THREADS_COUNT; i++) {
+                        String line = lines[iterationCount - i - 1];
                         String[] parts = line.split(": ");
-                        int result = Integer.parseInt(parts[1].trim());
-                        sum += result;
+
+                        for (int j = 0; j < parts.length; j++) {
+                            int result = Integer.parseInt(parts[j]);
+                            sum += result;
+                        }
                     }
 
                     if (sum == 0) {

@@ -13,7 +13,7 @@ public class ExecutionThreadMiddle extends Thread {
     private final CyclicBarrier cyclicBarrier;
 
     public ExecutionThreadMiddle(ReentrantLock lock1, ReentrantLock lock2, int sleep, int activity_min, int activity_max,
-                           CyclicBarrier cyclicBarrier) {
+                            CyclicBarrier cyclicBarrier) {
         this.lock1 = lock1;
         this.lock2 = lock2;
         this.sleep = sleep;
@@ -25,25 +25,24 @@ public class ExecutionThreadMiddle extends Thread {
     public void run() {
         System.out.println(this.getName() + " - STATE 1");
 
-        if(lock1.tryLock() && lock2.tryLock()) {
-            try {
-                System.out.println(this.getName() + " - STATE 2");
-                int k = (int) Math.round(Math.random() * (activity_max - activity_min) + activity_min);
-                for (int i = 0; i < k * 100000; i++) {
-                    i++;
-                    i--;
-                }
+        lock1.lock();
+        lock2.lock();
 
-                try {
-                    Thread.sleep(Math.round(sleep) * 500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } finally {
-                lock2.unlock();
-                lock1.unlock();
-            }
+        System.out.println(this.getName() + " - STATE 2");
+        int k = (int) Math.round(Math.random() * (activity_max - activity_min) + activity_min);
+        for (int i = 0; i < k * 100000; i++) {
+            i++;
+            i--;
         }
+
+        try {
+            Thread.sleep(Math.round(sleep) * 500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        lock1.unlock();
+        lock2.unlock();
 
         System.out.println(this.getName() + " - STATE 3");
 

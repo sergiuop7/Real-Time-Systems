@@ -7,8 +7,10 @@ public class Main {
     public static void main(String[] args) {
         try {
             FileWriter fileWriter = new FileWriter("output.txt");
+
             Fir fir = new Fir(fileWriter);
             fir.startSimulation();
+
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
